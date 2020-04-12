@@ -1,0 +1,24 @@
+
+title: Newsletter
+
+icon: 🖼
+
+preset: page
+pages: false
+
+status:
+  draft: true
+  review: false
+  listed: true
+
+fields:
+  sendTestButton:
+    type: testbtn
+  sender:
+    type: email
+    label: Adresse de Réception de la newsletter de test
+    subject:
+    type: text
+  message:
+    type: textarea
+    size: large

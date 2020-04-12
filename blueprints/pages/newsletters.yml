@@ -1,0 +1,30 @@
+title: Newsletters
+
+icon: 📖
+
+preset: pages
+
+templates:
+  - newsletter
+
+create: newsletter
+
+columns:
+  - width: 1/2
+    sections:
+      drafts:
+        extends: sections/newsletters
+        headline: Drafts
+        status: draft
+
+      unlisted:
+        extends: sections/newsletters
+        headline: In Review
+        status: unlisted
+
+  - width: 1/2
+    sections:
+      listed:
+        extends: sections/newsletters
+        headline: Published
+        status: listed
