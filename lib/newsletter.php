@@ -15,17 +15,18 @@ class Newsletter {
         
         try {
             if ($bcc) {
-                $email = new Email([
-                    'from'      => $from,
-                    'replyTo'   => $from,
-                    'to'        => $from,
-                    'bcc'       => $to,
-                    'subject'   => $subject,
-                    'body' => [
-                        'html' => $message,
-                    ],
-                    'attachments' => $files
-                ]);
+                foreach($to as $recipient) {
+                    $email = new Email([
+                        'from'      => $from,
+                        'replyTo'   => $from,
+                        'to'        => $recipient,
+                        'subject'   => $subject,
+                        'body' => [
+                            'html' => $message,
+                        ],
+                        'attachments' => $files
+                    ]);
+                };
             } else {
                 $email = new Email([
                     'from'      => $from,
