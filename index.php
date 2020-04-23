@@ -40,30 +40,23 @@ Kirby::plugin('scardoso/newsletter', [
     'api' => [
         'routes' => [
             [
-                'pattern' => 'newsletter/test/(:any)/(:any)',
-                'action'  => function (string $uri_1, string $uri_2) {
-                    $page = kirby()->page($uri_1 .'/'. $uri_2);
-                    
-                    $from = 'info@concerts-classiques-gryon.ch';
-                    $to = $page->sender()->toString();
-                    $subject = $page->subject()->toString();
-                    $message = $page->message()->kirbytext()->toString();
+                'pattern' => 'newsletter/send/(:any)/(:any)/(:num)',
+                'action'  => function (string $uri_1, string $uri_2, int $test) {
+                    $test = $test === 1;
+                    $from = kirby()->option('scardoso.newsletter.from');
 
-                    $result = Newsletter::send($from, $to, $subject, $message, $bcc=false, $page);
-                    return json_encode($result);
-                },
-                'method' => 'get'
-            ],
-            [
-                'pattern' => 'newsletter/send/(:any)/(:any)',
-                'action'  => function (string $uri_1, string $uri_2) {
-                    $page = kirby()->page($uri_1 .'/'. $uri_2);
+                    if ($from !== '') {
+                        $page = kirby()->page($uri_1 .'/'. $uri_2);
+                        $subject = $page->subject()->toString();
+                        $message = $page->message()->kirbytext()->toString();
+                        $result = Newsletter::send($from, $to='', $subject, $message, $page, $test);
+                    } else {
+                        $result = [
+                            'message' => "Please set 'from' property in your config.php",
+                            'status' => 400
+                        ];
+                    }
 
-                    $from = option('scardoso.newsletter.from');
-                    $subject = $page->subject()->toString();
-                    $message = $page->message()->kirbytext()->toString();
-                    
-                    $result = Newsletter::send($from, $to='', $subject, $message, $bcc=true, $page);
                     return json_encode($result);
                 },
                 'method' => 'get'

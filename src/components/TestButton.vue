@@ -13,7 +13,7 @@
             button="Envoyer le test"
             theme="positive"
             icon="check"
-            @submit="test"
+            @submit="send"
         >
             <k-text>
                 Êtes vous sûr de vouloir envoyer la Newsletter de test ?
@@ -63,14 +63,12 @@ export default {
     },
     methods: {
         test() {
-            var self = this;
-            let url = 'newsletter/test/' + encodeURI(this.pageURI);
+            let url = 'newsletter/test/' + encodeURI(this.pageURI) + '/1';
             this.$api.get(url);
             this.$refs.test.success("Test Envoyé !");
         },
         send() {
-            var self = this;
-            let url = 'newsletter/send/' + encodeURI(this.pageURI);
+            let url = 'newsletter/send/' + encodeURI(this.pageURI) + '/0';
             this.$api.get(url);
             this.$refs.send_newsletter.success("Newsletter Envoyé !");
         },

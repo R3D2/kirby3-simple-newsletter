@@ -5,8 +5,8 @@ use Kirby\Exception;
 
 class Newsletter {
     
-    public static function send($from, $to, $subject, $message, $bcc, $page) {
-        $to = $bcc ? Newsletter::getSubscribers() : $to;
+    public static function send($from, $to, $subject, $message, $page, $test) {
+        $to = $test ? $to : Newsletter::getSubscribers();
         $files = Newsletter::getFiles($page);
 
         $result = [];
@@ -14,31 +14,18 @@ class Newsletter {
         $status = 200;
         
         try {
-            if ($bcc) {
-                foreach($to as $recipient) {
-                    $email = new Email([
-                        'from'      => $from,
-                        'replyTo'   => $from,
-                        'to'        => $recipient,
-                        'subject'   => $subject,
-                        'body' => [
-                            'html' => $message,
-                        ],
-                        'attachments' => $files
-                    ]);
-                };
-            } else {
+            foreach($to as $recipient) {
                 $email = new Email([
                     'from'      => $from,
                     'replyTo'   => $from,
-                    'to'        => $to,
+                    'to'        => $recipient,
                     'subject'   => $subject,
                     'body' => [
                         'html' => $message,
                     ],
                     'attachments' => $files
                 ]);
-            }
+            };
             $log = $email->isSent() ? 'Mail has been sent !' : 'Mais has not been sent';
         } catch (Exception $error) {
             $log = $error->getMessage();
