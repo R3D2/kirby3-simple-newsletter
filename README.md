@@ -16,7 +16,7 @@ You can find them in the blueprints folder...
 
 ## Usage
 
-Text, images and videos are good things to describe how to use this plugin.
+> TO DOCUMENT
 
 ## Options
 
