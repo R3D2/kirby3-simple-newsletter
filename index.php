@@ -1,5 +1,6 @@
 <?php
 
+use Kirby\Toolkit\I18n;
 use Kirby\Cms\Blueprint;
 use Kirby\Cms\Page;
 use Kirby\Cms\Pages;
@@ -8,7 +9,8 @@ use Kirby\Cms\Pages;
 
 Kirby::plugin('scardoso/newsletter', [
     'options' => [
-        'from' => 'tospecify@intheconfig.php'
+        'from' => 'tospecify@intheconfig.php',
+        'subscriber.page.uri' => 'abonnes'
     ],
     'blueprints' => [
         'pages/newsletter' => __DIR__ . '/blueprints/pages/newsletter.yml',
@@ -20,10 +22,10 @@ Kirby::plugin('scardoso/newsletter', [
         'newsletter_form' => __DIR__ . '/snippets/newsletter_form.php'
     ],
     'fields' => [
-        'testbtn' => [
+        'newsletter' => [
             'props' => [
                 'data' => function (string $data = null) {
-                    return \Kirby\Toolkit\I18n::translate($data, $data);
+                    return I18n::translate($data, $data);
                 },
                 'pageURI' => function () {
                     return $this->model()->uri();
@@ -32,7 +34,7 @@ Kirby::plugin('scardoso/newsletter', [
                     return $this->model()->id();
                 },
                 'subscriberLink' => function () {
-                    return kirby()->option('subscriper.page.uri');
+                    return kirby()->option('scardoso.subscriber.page.uri');
                 }
             ]
         ],
@@ -47,9 +49,17 @@ Kirby::plugin('scardoso/newsletter', [
 
                     if ($from !== '') {
                         $page = kirby()->page($uri_1 .'/'. $uri_2);
-                        $subject = $page->subject()->toString();
-                        $message = $page->message()->kirbytext()->toString();
-                        $result = Newsletter::send($from, $to='', $subject, $message, $page, $test);
+                        $to = ($test) ? $page->test()->toString() : '';
+                        if ($to !== '') {
+                            $subject = $page->subject()->toString();
+                            $message = $page->message()->kirbytext()->toString();
+                            $result = Newsletter::send($from, $to, $subject, $message, $page, $test);
+                        } else {
+                            $result = [
+                                'message' => "Veuillez rentrer une adresse de récéption pour l'envoi du test",
+                                'status' => 400
+                            ];
+                        }
                     } else {
                         $result = [
                             'message' => "Please set 'from' property in your config.php",
