@@ -26,7 +26,7 @@ The following options need to be set in your `/site/config/config.php` file:
           'password' => 'mailpassword',
         ]
     ],
-    'scardoso.newsletter.from' => 'info@concerts-classiques-gryon.ch',
+    'scardoso.newsletter.from' => 'myfrom@email.com',
 ```
 
 ### Subscribers
