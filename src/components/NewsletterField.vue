@@ -4,16 +4,16 @@
             icon="email"
             theme="button"
             type="submit"
-            v-on:click="$refs.test.open()"
+            v-on:click="$refs.dialog_test.open()"
         >
         Envoyer un Test    
         </k-button>
         <k-dialog
-            ref="test"
+            ref="dialog_test"
             button="Envoyer le test"
             theme="positive"
             icon="check"
-            @submit="send"
+            @submit="send(test=true)"
         >
             <k-text>
                 Êtes vous sûr de vouloir envoyer la Newsletter de test ?
@@ -34,17 +34,17 @@
             theme="button"
             class="k-send-button"
             type="submit"
-            v-on:click="$refs.send_newsletter.open()"
+            v-on:click="$refs.dialog_send.open()"
         >
         Envoyer la Newsletter  
         </k-button>
         <k-dialog
-            ref="send"
+            ref="dialog_send"
             button="Envoyer la Newsletter"
             theme="positive"
             icon="check"
             size="medium"
-            @submit="send"
+            @submit="send(test=false)"
         >
             <k-text>
                 Êtes-vous sûr de vouloir envoyer la Newsletter ?
@@ -62,15 +62,15 @@ export default {
         status: Boolean
     },
     methods: {
-        test() {
-            let url = 'newsletter/test/' + encodeURI(this.pageURI) + '/1';
+        send(test) {
+            let isTest = (test) ? '/0' : '/1';
+            let url = 'newsletter/send/' + encodeURI(this.pageURI) + isTest;
             this.$api.get(url);
-            this.$refs.test.success("Test Envoyé !");
-        },
-        send() {
-            let url = 'newsletter/send/' + encodeURI(this.pageURI) + '/0';
-            this.$api.get(url);
-            this.$refs.send.success("Newsletter Envoyé !");
+            if (test) {
+                this.$refs.dialog_test.success("Test Envoyé !");
+            } else {
+                this.$refs.dialog_send.success("Newsletter Envoyé !");
+            }
         },
     }
 }

@@ -44,13 +44,13 @@ Kirby::plugin('scardoso/newsletter', [
             [
                 'pattern' => 'newsletter/send/(:any)/(:any)/(:num)',
                 'action'  => function (string $uri_1, string $uri_2, int $test) {
-                    $test = $test === 1;
+                    $test = $test === 0;
                     $from = kirby()->option('scardoso.newsletter.from');
 
                     if ($from !== '') {
                         $page = kirby()->page($uri_1 .'/'. $uri_2);
-                        $to = ($test) ? $page->test()->toString() : '';
-                        if ($to !== '') {
+                        $to = ($test) ? $page->to()->toString() : 'multi';
+                        if ($to != '') {
                             $subject = $page->subject()->toString();
                             $message = $page->message()->kirbytext()->toString();
                             $result = Newsletter::send($from, $to, $subject, $message, $page, $test);

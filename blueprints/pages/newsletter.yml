@@ -15,7 +15,7 @@ fields:
   newsletter:
     type: newsletter
 
-  test:
+  to:
     label: Adresse de Réception de la newsletter de test
     type: email
 
