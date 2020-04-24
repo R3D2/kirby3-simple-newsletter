@@ -12,13 +12,16 @@ status:
   listed: true
 
 fields:
-  sendTestButton:
-    type: testbtn
-  sender:
-    type: email
+  newsletter:
+    type: newsletter
+
+  test:
     label: Adresse de Réception de la newsletter de test
-    subject:
+    type: email
+
+  subject:
     type: text
+
   message:
     type: textarea
     size: large
