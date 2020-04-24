@@ -2,41 +2,62 @@
 
 ![Version](https://img.shields.io/badge/version-0.1-green.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Kirby Version](https://img.shields.io/badge/Kirby-3.0%2B-red.svg)
 
-*Version 0.1*
-
-Simple Newsletter plugin with Subscriber
-
 ## Setup
 
-### 1. Blueprint
+### Blueprints
 There is two custom blueprints that needs to be added to your panel so you can create the pages 
 to send a newsletter and to get visitors to subscribe at your newsletter.
 
 You can find them in the blueprints folder...
 
-## Usage
-
-> TO DOCUMENT
-
 ## Options
 
-The following options can be set in your `/site/config/config.php` file:
+The following options need to be set in your `/site/config/config.php` file:
 
-```php
-return [
-    'scardoso.newsletter.from' => 'address.to.show@from.field'
-]
+```
+'email' => [
+        'transport' => [
+          'type' => 'smtp',
+          'host' => 'mail.example.com',
+          'port' => 587,
+          'security' => true,
+          'auth' => true,
+          'username' => 'email@example.com',
+          'password' => 'mailpassword',
+        ]
+    ],
+    'scardoso.newsletter.from' => 'info@concerts-classiques-gryon.ch',
 ```
 
-## Changelog
+### Subscribers
+To allow visitor to subscribe to your newsletter you need to send a POST request to this route :
 
-**0.1**
+- First create a page with the subscriber blueprint
+- Create a form who sends the email through a POST request
+- Then use the uri you have set for the blueprint you have created to the page function.
 
-- Initial release
+```php
+<?php
+if( !empty($_POST) && isset($_POST['email']) ) {
+    // Get the current list of subscribers
+    // parameter of the page function must be the uri of your subscriber page
+    $subs = kirby()->page('abonnes')->subscriber()->toStructure()->toArray();
+    
+    // Add the new one
+    $subs[] = [
+        'email' => $_POST['email']
+    ];
+    
+    // Add it to our struct
+    $kirby = kirby();
+    $kirby->impersonate('kirby');
 
-## Requirements
-
-- [**Kirby**](https://getkirby.com/) 3.0+
+    $kirby->page('abonnes')->save([
+        'subscriber' => $subs
+    ]);
+}
+?>
+```
 
 ## Disclaimer
 
