@@ -1,6 +1,6 @@
 # Kirby 3 Simple Newsletter
 
-![Version](https://img.shields.io/badge/version-0.1-green.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Kirby Version](https://img.shields.io/badge/Kirby-3.0%2B-red.svg)
+![Version](https://img.shields.io/badge/version-0.2-green.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Kirby Version](https://img.shields.io/badge/Kirby-3.0%2B-red.svg)
 
 ## Setup
 
