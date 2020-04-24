@@ -1,7 +1,7 @@
-import TestButton from './components/TestButton.vue'
+import NewsletterField from "./components/NewsletterField";
 
-panel.plugin('samuel/newsletter', {
+panel.plugin('scardoso/simple-newsletter', {
     fields: {
-        testbtn : TestButton
+        newsletter: NewsletterField
     }
 });
