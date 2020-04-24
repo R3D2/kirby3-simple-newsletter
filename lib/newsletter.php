@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Kirby\Email\PHPMailer as Email;
 use Kirby\Exception;
