@@ -1,5 +1,5 @@
 <template>
-    <div>
+     <div>
         <k-button 
             icon="email"
             theme="button"
@@ -24,8 +24,7 @@
             theme="button"
             class="k-send-button"
             type="submit"
-            link="/pages/abonnes"
-            v-on:click="subscriberView"
+            v-bind:link="subscriberLink"
         >
         Voir la liste des abonnés  
         </k-button>
@@ -59,7 +58,8 @@ export default {
         data: String,
         pageURI: String,
         id: String,
-        status: Boolean
+        status: Boolean,
+        subscriberLink: String,
     },
     methods: {
         send(test) {
