@@ -6,7 +6,7 @@
             type="submit"
             v-on:click="$refs.dialog_test.open()"
         >
-        Envoyer un Test    
+        {{ $t('scardoso.newsletter.sendTestMail') }}
         </k-button>
         <k-dialog
             ref="dialog_test"
@@ -26,7 +26,7 @@
             type="submit"
             v-bind:link="subscriberLink"
         >
-        Voir la liste des abonnés  
+        {{ $t('scardoso.newsletter.viewSubscribers') }}
         </k-button>
         <k-button 
             icon="check"
@@ -35,7 +35,7 @@
             type="submit"
             v-on:click="$refs.dialog_send.open()"
         >
-        Envoyer la Newsletter  
+        {{ $t('scardoso.newsletter.sendNewsletter') }}  
         </k-button>
         <k-dialog
             ref="dialog_send"

@@ -8993,7 +8993,13 @@ exports.default = _default;
             }
           }
         },
-        [_vm._v("\n    Envoyer un Test    \n    ")]
+        [
+          _vm._v(
+            "\n    " +
+              _vm._s(_vm.$t("scardoso.newsletter.sendTestMail")) +
+              "\n    "
+          )
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -9032,7 +9038,13 @@ exports.default = _default;
             link: _vm.subscriberLink
           }
         },
-        [_vm._v("\n    Voir la liste des abonnés  \n    ")]
+        [
+          _vm._v(
+            "\n    " +
+              _vm._s(_vm.$t("scardoso.newsletter.viewSubscribers")) +
+              "\n    "
+          )
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -9046,7 +9058,13 @@ exports.default = _default;
             }
           }
         },
-        [_vm._v("\n    Envoyer la Newsletter  \n    ")]
+        [
+          _vm._v(
+            "\n    " +
+              _vm._s(_vm.$t("scardoso.newsletter.sendNewsletter")) +
+              "  \n    "
+          )
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -9151,7 +9169,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61696" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57745" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

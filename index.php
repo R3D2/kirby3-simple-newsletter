@@ -56,7 +56,7 @@ Kirby::plugin('scardoso/newsletter', [
                             $result = Newsletter::send($from, $to, $subject, $message, $page, $test);
                         } else {
                             $result = [
-                                'message' => "Veuillez rentrer une adresse de récéption pour l'envoi du test",
+                                'message' => t('scardoso.newsletter.noTestMail'),
                                 'status' => 400
                             ];
                         }
@@ -88,5 +88,25 @@ Kirby::plugin('scardoso/newsletter', [
                 'method' => 'post'
             ],
         ]   
+    ],
+    'translations' => [
+        'en' => [
+            'scardoso.newsletter.sendNewsletter' => 'Send newsletter',
+            'scardoso.newsletter.viewSubscribers' => 'View subscribers',
+            'scardoso.newsletter.sendTestMail' => 'Send a test mail',
+            'scardoso.newsletter.noTestMail' => 'Please enter a valid email address for sending the test newsletter',
+        ],
+        'de' => [
+            'scardoso.newsletter.sendNewsletter' => 'Newsletter versenden',
+            'scardoso.newsletter.viewSubscribers' => 'Abonnenten',
+            'scardoso.newsletter.sendTestMail' => 'Test-Email senden',
+            'scardoso.newsletter.noTestMail' => 'Bitte eine Email-Adresse für den Test-Newsletter angeben',
+        ],
+        'fr' => [
+            'scardoso.newsletter.sendNewsletter' => 'Envoyer la Newsletter',
+            'scardoso.newsletter.viewSubscribers' => 'Voir la liste des abonnés',
+            'scardoso.newsletter.sendTestMail' => 'Envoyer un test',
+            'scardoso.newsletter.noTestMail' => "Veuillez rentrer une adresse de récéption pour l'envoi du test"
+        ]
     ]
 ]);
