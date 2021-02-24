@@ -1,6 +1,6 @@
 <?php
 
-use Kirby\Email\PHPMailer as Email;
+// use Kirby\Email\PHPMailer as Email;
 
 class Newsletter
 {
@@ -18,7 +18,7 @@ class Newsletter
         if (!empty($to)) {
             try {
                 foreach ($to as $recipient) {
-                    $email = new Email([
+                    $email = kirby()->email([
                         'from' => $from,
                         'replyTo' => $from,
                         'to' => $recipient,
@@ -56,8 +56,8 @@ class Newsletter
     {
         $to = [];
 
-        // Set the uri of your subscriber blueprint in the page function
-        foreach (kirby()->page('abonnes')->subscriber()->toStructure() as $e) {
+        // Set the uri of your subscriber page in the config
+        foreach (kirby()->page(option('scardoso.newsletter.subscribers'))->subscriber()->toStructure() as $e) {
             $to[] = $e->email()->toString();
         }
 

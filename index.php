@@ -10,7 +10,7 @@ use Kirby\Cms\Pages;
 Kirby::plugin('scardoso/newsletter', [
     'options' => [
         'from' => 'tospecify@intheconfig.php',
-        'subscriber.page.uri' => 'abonnes'
+        'subscribers' => 'subscribers'
     ],
     'blueprints' => [
         'pages/newsletter' => __DIR__ . '/blueprints/pages/newsletter.yml',
@@ -34,7 +34,7 @@ Kirby::plugin('scardoso/newsletter', [
                     return $this->model()->id();
                 },
                 'subscriberLink' => function () {
-                    return kirby()->option('scardoso.subscriber.page.uri');
+                    return kirby()->option('scardoso.newsletter.subscribers');
                 }
             ]
         ],
