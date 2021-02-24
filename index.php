@@ -12,19 +12,29 @@ load([
     'scardoso\\newsletter\\subscribers' => 'lib/subscribers.php',
 ], __DIR__);
 
+function newsletter(): Newsletter
+{
+    return new Newsletter();
+}
+
 Kirby::plugin('scardoso/newsletter', [
     'options' => [
         'from' => 'tospecify@intheconfig.php',
         'subscribers' => 'subscribers'
     ],
     'blueprints' => [
-        'pages/newsletter' => __DIR__ . '/blueprints/pages/newsletter.yml',
         'pages/newsletters' => __DIR__ . '/blueprints/pages/newsletters.yml',
+        'pages/newsletter' => __DIR__ . '/blueprints/pages/newsletter.yml',
         'pages/subscribers' => __DIR__ . '/blueprints/pages/subscribers.yml',
+        'pages/subscriber' => __DIR__ . '/blueprints/pages/subscriber.yml',
+
         'sections/newsletters' => __DIR__ . '/blueprints/sections/newsletters.yml'
     ],
     'snippets' => [
         'newsletter_form' => __DIR__ . '/snippets/newsletter_form.php'
+    ],
+    'pageModels' => [
+        'order' => 'OrderPage'
     ],
     'fields' => [
         'newsletter' => [
@@ -110,6 +120,9 @@ Kirby::plugin('scardoso/newsletter', [
             'scardoso.newsletter.viewSubscribers' => 'View subscribers',
             'scardoso.newsletter.sendTestMail' => 'Send a test mail',
             'scardoso.newsletter.noTestMail' => 'Please enter a valid email address for sending the test newsletter',
+
+            'error.scardoso.fieldsvalidation' => 'Invalid field content.',
+            'error.scardoso.existingEntry' => 'Email address already registered.'
         ],
         'de' => [
             'scardoso.newsletter.t.testRecipients' => 'Test-Email Empfänger',

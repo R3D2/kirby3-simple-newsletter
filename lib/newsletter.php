@@ -13,6 +13,11 @@ class Newsletter
         $this->subscribers = new Subscribers();
     }
 
+    public function subscribers(): Subscribers
+    {
+        return $this->subscribers;
+    }
+
     public function send($from, $to, $subject, $message, $page, $test)
     {
         $to = $test ? $to : $this->subscribers->getEmails(); // Get all the subscribers or set test recipients
@@ -58,18 +63,6 @@ class Newsletter
 
         kirby()->trigger('newsletter.send:after', compact('page'));
         return $result;
-    }
-
-    public static function getSubscribers()
-    {
-        $to = [];
-
-        // Set the uri of your subscriber page in the config
-        foreach (kirby()->page(option('scardoso.newsletter.subscribers'))->subscriber()->toStructure() as $e) {
-            $to[] = $e->email()->toString();
-        }
-
-        return $to;
     }
 
     public static function getFiles($page)
