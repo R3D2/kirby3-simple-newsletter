@@ -1,13 +1,21 @@
 <?php
+namespace Scardoso\Newsletter;
 
-// use Kirby\Email\PHPMailer as Email;
+use Scardoso\Newsletter\Subscribers;
+use Kirby\Exception\Exception;
 
 class Newsletter
 {
-
-    public static function send($from, $to, $subject, $message, $page, $test)
+    protected $subscribers;
+    
+    public function __construct()
     {
-        $to = $test ? $to : Newsletter::getSubscribers(); // Get all the subscribers or set test recipients
+        $this->subscribers = new Subscribers();
+    }
+
+    public function send($from, $to, $subject, $message, $page, $test)
+    {
+        $to = $test ? $to : $this->subscribers->getEmails(); // Get all the subscribers or set test recipients
         $files = Newsletter::getFiles($page);
 
         $result = [];
@@ -17,7 +25,7 @@ class Newsletter
         // Check if we have at least of subscriber or a test recipient
         if (empty($to)) {
             $errorMessage = $test ? 'No test mail address provided!' : 'There is no subscriber to send our newsletter to!';
-            throw new Error($errorMessage);
+            throw new Exception($errorMessage);
         };
 
         try {
@@ -33,6 +41,7 @@ class Newsletter
             ]);
             $log = $email->isSent() ? 'Mail has been sent!' : 'Mail could not be sent';
         } catch (Exception $error) {
+            throw new Exception($error->getMessage());
             $log = $error->getMessage();
             $status = 400;
         }

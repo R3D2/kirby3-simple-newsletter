@@ -1,11 +1,16 @@
 <?php
 
+use Scardoso\Newsletter\Newsletter;
+
 use Kirby\Toolkit\I18n;
 use Kirby\Cms\Blueprint;
 use Kirby\Cms\Page;
 use Kirby\Cms\Pages;
 
-@include_once __DIR__ . '/lib/newsletter.php';
+load([
+    'scardoso\\newsletter\\newsletter' => 'lib/newsletter.php',
+    'scardoso\\newsletter\\subscribers' => 'lib/subscribers.php',
+], __DIR__);
 
 Kirby::plugin('scardoso/newsletter', [
     'options' => [
@@ -51,6 +56,7 @@ Kirby::plugin('scardoso/newsletter', [
                 'action'  => function (string $uri_1, string $uri_2, int $test) {
                     $test = $test === 0;
                     $from = kirby()->option('scardoso.newsletter.from');
+                    $nl = new Newsletter();
 
                     if ($from !== '') {
                         $page = kirby()->page($uri_1 .'/'. $uri_2);
@@ -58,7 +64,7 @@ Kirby::plugin('scardoso/newsletter', [
                         if ($to != '') {
                             $subject = $page->subject()->toString();
                             $message = $page->message()->kirbytext()->toString();
-                            $result = Newsletter::send($from, $to, $subject, $message, $page, $test);
+                            $result = $nl->send($from, $to, $subject, $message, $page, $test);
                         } else {
                             $result = [
                                 'message' => t('scardoso.newsletter.noTestMail'),
