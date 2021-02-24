@@ -30,7 +30,7 @@
         </k-button>
         <k-button 
             icon="check"
-            theme="button"
+            theme="positive"
             class="k-send-button"
             type="submit"
             v-on:click="$refs.dialog_send.open()"

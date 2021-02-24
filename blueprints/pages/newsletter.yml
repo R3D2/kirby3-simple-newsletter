@@ -6,6 +6,9 @@ icon: 🖼
 preset: page
 pages: false
 
+options:
+  changeStatus: false
+
 status:
   draft: true
   review: false

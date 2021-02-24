@@ -16,7 +16,7 @@ Kirby::plugin('scardoso/newsletter', [
         'pages/newsletter' => __DIR__ . '/blueprints/pages/newsletter.yml',
         'pages/newsletters' => __DIR__ . '/blueprints/pages/newsletters.yml',
         'pages/subscribers' => __DIR__ . '/blueprints/pages/subscribers.yml',
-        'sections/newsletters' => __DIR__ . '/blueprints/sections/newsletter.yml'
+        'sections/newsletters' => __DIR__ . '/blueprints/sections/newsletters.yml'
     ],
     'snippets' => [
         'newsletter_form' => __DIR__ . '/snippets/newsletter_form.php'

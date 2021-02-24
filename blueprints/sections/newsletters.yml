@@ -1,6 +1,5 @@
 type: pages
 headline: Newsletter
-parent: kirby.page("newsletter")
 info: "{{ page.date.toDate('d.m.Y') }}"
 template: newsletter
 empty: No newsletters yet

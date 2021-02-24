@@ -2,12 +2,11 @@ title: Newsletters
 
 icon: 📖
 
-preset: pages
-
 templates:
   - newsletter
 
-create: newsletter
+create:
+  - newsletter
 
 columns:
   - width: 1/2
@@ -26,5 +25,5 @@ columns:
     sections:
       listed:
         extends: sections/newsletters
-        headline: Published
+        headline: Sent
         status: listed
