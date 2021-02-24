@@ -65,12 +65,23 @@ export default {
         send(test) {
             let isTest = (test) ? '/0' : '/1';
             let url = 'newsletter/send/' + encodeURI(this.pageURI) + isTest;
-            this.$api.get(url);
-            if (test) {
-                this.$refs.dialog_test.success("Test Envoyé !");
-            } else {
-                this.$refs.dialog_send.success("Newsletter Envoyé !");
-            }
+            this.$api.get(url)
+            .then(response => {
+                console.log(response);
+                if (test) {
+                    if (response.status != 200) {
+                        this.$refs.dialog_test.error(response.message)
+                    } else {
+                        this.$refs.dialog_test.success(response.message)
+                    }
+                } else {
+                    if (response.status != 200) {
+                        this.$refs.dialog_send.error(response.message)
+                    } else {
+                        this.$refs.dialog_send.success(response.message)
+                    }
+                }
+            });
         },
     }
 }

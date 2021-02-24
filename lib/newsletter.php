@@ -22,14 +22,14 @@ class Newsletter
                         'from' => $from,
                         'replyTo' => $from,
                         'to' => $recipient,
-                        'subject' => $subject,
+                        'subject' => $test ? '[Test] ' . $subject : $subject,
                         'body' => [
                             'html' => $message,
                         ],
                         'attachments' => $files
                     ]);
                 };
-                $log = $email->isSent() ? 'Mail has been sent !' : 'Mais has not been sent';
+                $log = $email->isSent() ? 'Mail has been sent!' : 'Mail could not be sent';
             } catch (Exception $error) {
                 $log = $error->getMessage();
                 $status = 400;
