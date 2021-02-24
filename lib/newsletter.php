@@ -47,6 +47,7 @@ class Newsletter
             'status' => $status
         ];
 
+        kirby()->trigger('newsletter.send:after', compact('page'));
         return $result;
     }
 

@@ -39,6 +39,11 @@ Kirby::plugin('scardoso/newsletter', [
             ]
         ],
     ],
+    'hooks' => [
+        'newsletter.send:after' => function ($page) {
+            $page->changeStatus('listed');
+        },
+    ],
     'api' => [
         'routes' => [
             [
