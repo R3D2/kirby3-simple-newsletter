@@ -15,25 +15,25 @@ class Newsletter
         $status = 200;
 
         // Check if we have at least of subscriber or a test recipient
-        if (!empty($to)) {
-            try {
-                $email = kirby()->email([
-                    'from' => $from,
-                    'replyTo' => $from,
-                    'to' => $to,
-                    'subject' => $test ? '[Test] ' . $subject : $subject,
-                    'body' => [
-                        'html' => $message,
-                    ],
-                    'attachments' => $files
-                ]);
-                $log = $email->isSent() ? 'Mail has been sent!' : 'Mail could not be sent';
-            } catch (Exception $error) {
-                $log = $error->getMessage();
-                $status = 400;
-            }
-        } else {
-            $log = 'There is no subscriber to send our newsletter to !';
+        if (empty($to)) {
+            $errorMessage = $test ? 'No test mail address provided!' : 'There is no subscriber to send our newsletter to!';
+            throw new Error($errorMessage);
+        };
+
+        try {
+            $email = kirby()->email([
+                'from' => $from,
+                'replyTo' => $from,
+                'to' => $to,
+                'subject' => $test ? '[Test] ' . $subject : $subject,
+                'body' => [
+                    'html' => $message,
+                ],
+                'attachments' => $files
+            ]);
+            $log = $email->isSent() ? 'Mail has been sent!' : 'Mail could not be sent';
+        } catch (Exception $error) {
+            $log = $error->getMessage();
             $status = 400;
         }
 

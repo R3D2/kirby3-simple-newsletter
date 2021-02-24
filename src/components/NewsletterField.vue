@@ -69,19 +69,16 @@ export default {
             .then(response => {
                 console.log(response);
                 if (test) {
-                    if (response.status != 200) {
-                        this.$refs.dialog_test.error(response.message)
-                    } else {
-                        this.$refs.dialog_test.success(response.message)
-                    }
+                    this.$refs.dialog_test.success(response.message);
+                    window.setTimeout(() => location.reload(), 2000);
                 } else {
-                    if (response.status != 200) {
-                        this.$refs.dialog_send.error(response.message)
-                    } else {
-                        this.$refs.dialog_send.success(response.message)
-                    }
+                    this.$refs.dialog_send.success(response.message);
+                    window.setTimeout(() => location.reload(), 2000);
                 }
-            });
+            })
+            .catch(error => {
+                this.$refs.dialog_test.error(error.message);
+            })
         },
     }
 }
