@@ -10,9 +10,9 @@
         </k-button>
         <k-dialog
             ref="dialog_test"
-            button="Envoyer le test"
+            button="Send away!"
             theme="positive"
-            icon="check"
+            icon="email"
             @submit="send(test=true)"
         >
             <k-text>
@@ -30,7 +30,6 @@
         </k-button>
         <k-button 
             icon="check"
-            theme="positive"
             class="k-send-button"
             type="submit"
             v-on:click="$refs.dialog_send.open()"
@@ -39,10 +38,9 @@
         </k-button>
         <k-dialog
             ref="dialog_send"
-            button="Envoyer la Newsletter"
+            button="Send away!"
             theme="positive"
-            icon="check"
-            size="medium"
+            icon="email"
             @submit="send(test=false)"
         >
             <k-text>
@@ -63,21 +61,16 @@ export default {
     },
     methods: {
         send(test) {
+            let dialog = (test) ? this.$refs.dialog_test : this.$refs.dialog_send;
             let isTest = (test) ? '/0' : '/1';
             let url = 'newsletter/send/' + encodeURI(this.pageURI) + isTest;
             this.$api.get(url)
             .then(response => {
-                console.log(response);
-                if (test) {
-                    this.$refs.dialog_test.success(response.message);
-                    window.setTimeout(() => location.reload(), 2000);
-                } else {
-                    this.$refs.dialog_send.success(response.message);
-                    window.setTimeout(() => location.reload(), 2000);
-                }
+                dialog.success(response.message);
+                window.setTimeout(() => location.reload(), 2000);
             })
             .catch(error => {
-                this.$refs.dialog_test.error(error.message);
+                dialog.error(error.message);
             })
         },
     }
