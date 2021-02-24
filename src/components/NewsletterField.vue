@@ -16,7 +16,7 @@
             @submit="send(test=true)"
         >
             <k-text>
-                Êtes vous sûr de vouloir envoyer la Newsletter de test ?
+                {{ $t('scardoso.newsletter.t.confirmSendTestNewsletter') }}
             </k-text>
         </k-dialog>
         <k-button 
@@ -46,7 +46,7 @@
             @submit="send(test=false)"
         >
             <k-text>
-                Êtes-vous sûr de vouloir envoyer la Newsletter ?
+                {{ $t('scardoso.newsletter.t.confirmSendNewsletter') }}
             </k-text>
         </k-dialog>
     </div>
