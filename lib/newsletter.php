@@ -7,7 +7,7 @@ class Newsletter
 
     public static function send($from, $to, $subject, $message, $page, $test)
     {
-        $to = $test ? [$to] : Newsletter::getSubscribers(); // Get all the subscribers or set test recipient
+        $to = $test ? $to : Newsletter::getSubscribers(); // Get all the subscribers or set test recipients
         $files = Newsletter::getFiles($page);
 
         $result = [];
@@ -17,18 +17,16 @@ class Newsletter
         // Check if we have at least of subscriber or a test recipient
         if (!empty($to)) {
             try {
-                foreach ($to as $recipient) {
-                    $email = kirby()->email([
-                        'from' => $from,
-                        'replyTo' => $from,
-                        'to' => $recipient,
-                        'subject' => $test ? '[Test] ' . $subject : $subject,
-                        'body' => [
-                            'html' => $message,
-                        ],
-                        'attachments' => $files
-                    ]);
-                };
+                $email = kirby()->email([
+                    'from' => $from,
+                    'replyTo' => $from,
+                    'to' => $to,
+                    'subject' => $test ? '[Test] ' . $subject : $subject,
+                    'body' => [
+                        'html' => $message,
+                    ],
+                    'attachments' => $files
+                ]);
                 $log = $email->isSent() ? 'Mail has been sent!' : 'Mail could not be sent';
             } catch (Exception $error) {
                 $log = $error->getMessage();

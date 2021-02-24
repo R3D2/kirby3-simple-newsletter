@@ -1,6 +1,6 @@
 type: pages
 headline: Newsletter
-info: "{{ page.date.toDate('d.m.Y') }}"
+info: "{{ page.subject }}"
 template: newsletter
 empty: No newsletters yet
 sortBy: date desc

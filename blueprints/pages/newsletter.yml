@@ -19,8 +19,10 @@ fields:
     type: newsletter
 
   to:
-    label: Adresse de Réception de la newsletter de test
-    type: email
+    label: scardoso.newsletter.t.testRecipients
+    help: scardoso.newsletter.t.testRecipientsHelpText
+    type: text
+    icon: email
 
   subject:
     type: text

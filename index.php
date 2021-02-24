@@ -49,7 +49,7 @@ Kirby::plugin('scardoso/newsletter', [
 
                     if ($from !== '') {
                         $page = kirby()->page($uri_1 .'/'. $uri_2);
-                        $to = ($test) ? $page->to()->toString() : 'multi';
+                        $to = ($test) ? $page->to()->trim()->split(',') : 'multi';
                         if ($to != '') {
                             $subject = $page->subject()->toString();
                             $message = $page->message()->kirbytext()->toString();
@@ -91,18 +91,23 @@ Kirby::plugin('scardoso/newsletter', [
     ],
     'translations' => [
         'en' => [
+            'scardoso.newsletter.t.testRecipients' => 'Test mail recipients',
+            'scardoso.newsletter.t.testRecipientsHelpText' => 'It is possible to add multiple test mail recipients by separating email addresses with a comma.',
             'scardoso.newsletter.sendNewsletter' => 'Send newsletter',
             'scardoso.newsletter.viewSubscribers' => 'View subscribers',
             'scardoso.newsletter.sendTestMail' => 'Send a test mail',
             'scardoso.newsletter.noTestMail' => 'Please enter a valid email address for sending the test newsletter',
         ],
         'de' => [
+            'scardoso.newsletter.t.testRecipients' => 'Test-Email Empfänger',
+            'scardoso.newsletter.t.testRecipientsHelpText' => 'Mehrere Adressen könnnen mit einem Komma getrennt werden.',
             'scardoso.newsletter.sendNewsletter' => 'Newsletter versenden',
             'scardoso.newsletter.viewSubscribers' => 'Abonnenten',
             'scardoso.newsletter.sendTestMail' => 'Test-Email senden',
             'scardoso.newsletter.noTestMail' => 'Bitte eine Email-Adresse für den Test-Newsletter angeben',
         ],
         'fr' => [
+            'scardoso.newsletter.t.testRecipients' => 'Adresses de Réception de la newsletter de test',
             'scardoso.newsletter.sendNewsletter' => 'Envoyer la Newsletter',
             'scardoso.newsletter.viewSubscribers' => 'Voir la liste des abonnés',
             'scardoso.newsletter.sendTestMail' => 'Envoyer un test',
