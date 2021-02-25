@@ -1,4 +1,5 @@
 type: pages
+image: false
 templates:
   - newsletter
   - newsletter-sent

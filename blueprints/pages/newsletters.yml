@@ -20,7 +20,7 @@ columns:
     sections:
       listed:
         extends: sections/newsletters
-        headline: Sent
+        headline: Archive
         status: listed
         info: '{{ page.sentDate.toDate('Y-m-d') }}'
         sortBy: date desc

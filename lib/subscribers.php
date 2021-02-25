@@ -26,13 +26,9 @@ class Subscribers extends Collection {
         return $this->subscribersPage;
     }
 
-    public function getSubscriber(string $slug): Page 
+    public function getSubscriber(string $slug)
     {
-        $subscriber = page($slug);
-
-        if (!$subscriber) {
-            throw new Error('No Entry.');
-        }
+        $subscriber = $this->subscribersPage->children()->find($slug);
 
         return $subscriber;
     }
@@ -70,37 +66,59 @@ class Subscribers extends Collection {
             throw new Exception([
                 'key' => 'scardoso.existingEntry',
                 'httpCode' => 400,
-                'details' => $exists,
             ]);
         }
+
+        // generate security hash
+        $virtualSubscriber = $virtualSubscriber->update([
+            'hash' => bin2hex(random_bytes(16)),
+        ]);
 
         // authenticate
         $kirby = kirby();
         $kirby->impersonate('kirby');
 
         // create subscriber
-        $virtualSubscriber->save();
+        $subscriber = $virtualSubscriber->save();
 
-        // TODO
         // send a confirmation mail in which the new subscriber has to confirm their subscription
+        if (option('scardoso.newsletter.confirm')) {
+            $kirby->email([
+                'from' => option('scardoso.newsletter.from'),
+                'replyTo' => option('scardoso.newsletter.from'),
+                'to' => $subscriberData['email'],
+                'subject' => 'Welcome!',
+                'body'=> 'Please confirm your subscription by clicking this link: ' 
+                    . url('newsletter/subscribers/confirm/' 
+                    . $subscriber->uid()),
+            ]);
+        }
 
-        return $virtualSubscriber;
+        return $subscriber;
     }
 
     public function confirmSubscription(string $slug): Page
     {
-        $subscriber = getSubscriber($slug);
+        $subscriber = newsletter()->subscribers()->getSubscriber($slug);
+
+        if (!$subscriber) {
+            throw new Exception('No entry.');
+        }
+
+        $subscriber->changeStatus('listed');
 
         return $subscriber;
     }
 
-    public function unsubscribe(string $slug): Page 
+    public function unsubscribe(Page $subscriber): Page 
     {
-        $subscriber = getSubscriber($slug);
-
-        $subscriber->changeStatus('unlisted');
+        $kirby = kirby();
+        $kirby->impersonate('kirby');
+        $subscriber->changeStatus('draft');
 
         return $subscriber;
+
+        // TODO: actually delete the user!
     }
 
     public function delete(string $slug): Page

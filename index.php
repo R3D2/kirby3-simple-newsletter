@@ -10,7 +10,7 @@ use Kirby\Cms\Pages;
 load([
     'scardoso\\newsletter\\newsletter' => 'lib/Newsletter.php',
     'scardoso\\newsletter\\subscribers' => 'lib/Subscribers.php',
-    'scardoso\\newsletter\\Models\\SubscriberPage' => 'models/subscriber.php',
+    'scardoso\\newsletter\\Models\\SubscriberPage' => 'models/SubscriberPage.php',
 ], __DIR__);
 
 function newsletter(): Newsletter
@@ -21,7 +21,9 @@ function newsletter(): Newsletter
 Kirby::plugin('scardoso/newsletter', [
     'options' => [
         'from' => 'tospecify@intheconfig.php',
-        'subscribers' => 'subscribers'
+        'subscribers' => 'subscribers',
+        'confirm' => true,
+        'confirmationPage' => 'success',
     ],
     'blueprints' => [
         'pages/newsletters' => __DIR__ . '/blueprints/pages/newsletters.yml',
@@ -79,30 +81,55 @@ Kirby::plugin('scardoso/newsletter', [
             'action'  => function () {
 
                 $data = $_POST;
-                $redirect = isset($_POST['redirect']) ? $_POST['redirect'] : 'home';
+                // $redirect = isset($_POST['redirect']) ? $_POST['redirect'] : 'home';
                 $newsletter = newsletter();
 
                 $kirby = kirby();
                 $kirby->impersonate('kirby');
 
+                $return = $data;
+
                 try {
                     $newsletter->subscribers()->subscribe($data);
-                    $return = $data;
                 } 
                 catch(Exception $e) {
-                    $return = $e;
+                    return Response::json($e->getMessage());
                 }
 
-                return $return;
+                return Response::json('success');
             },
         ],
         [
-            'pattern' => 'newsletter/subscribers/unsubscribe/(:any)',
-            'action' => function($slug) {
-                $subscriber = page($slug);
+            'pattern' => '/newsletter/subscribers/confirm/(:any)',
+            'method' => 'GET',
+            'action'  => function ($uid) {
+
+                // $redirect = option('scardoso.newsletter.confirmationPage');
+                $newsletter = newsletter();
+                $kirby = kirby();
+                $kirby->impersonate('kirby');
+
+                try {
+                    $newsletter->subscribers()->confirmSubscription($uid);
+                }
+                catch(Exception $e) {
+                    return Response::json($e->getMessage());
+                }
+
+                return Response::json('success');
+            },
+        ],
+        [
+            'pattern' => 'unsubscribe/(:any)/(:any)',
+            'action' => function($slug, $hash) {
+                $subscriber = newsletter()->subscribers()->getSubscriber($slug);
 
                 if (!$subscriber) {
-                    throw new Error('Not a valid user');
+                    return 'Not a valid user';
+                }
+
+                if ($hash != $subscriber->hash()) {
+                    throw new Error("Hashes don’t match.");
                 }
 
                 $subscribers = newsletter()->subscribers();

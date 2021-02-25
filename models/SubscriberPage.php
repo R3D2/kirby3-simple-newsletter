@@ -21,18 +21,30 @@ class SubscriberPage extends Page {
     public static function hookPageCreate($page) {
 
         // handle existing email address
-        if ($page->siblings(false)->filter(function($sibling) use ($page) {
+        if (newsletter()->subscribers()->getPageObject()->children()->filter(function($sibling) use ($page) {
             return $sibling->email()->toString() == $page->email()->toString();
         })->count() > 0) {
-            $page->delete();
+            $page->delete(true);
             throw new Exception([
                 'key' => 'scardoso.existingEntry',
                 'httpCode' => 500
             ]);
-        }
+        };
 
-        // update page field content
-        $page->changeSlug(Str::random(16));
+        // generate slug
+        $slug = Str::random(16);
 
+        // random slugs
+        $page = $page->changeSlug($slug);
+
+        // change status
+        $subscribe = $page->subscribe()->toBool();
+        $page = $page->changeStatus($subscribe ? 'listed' : 'unlisted');
+
+        // indicate panel add
+        $page = $page->update([
+            'addedBy' => kirby()->user()->name()->or(kirby()->user()->email()),
+            'hash' => bin2hex(random_bytes(16)),
+        ]);
     }
 }

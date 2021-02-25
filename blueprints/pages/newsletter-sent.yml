@@ -5,17 +5,32 @@ icon: 📤
 preset: page
 pages: false
 
+status:
+  draft:
+    label: Draft
+    text: This is a draft.
+  unlisted:
+    label: Scheduled
+    text: The newsletter is scheduled.
+  listed:
+    label: Sent
+    text: The newsletter has been sent.
+
 options:
   changeTemplate:
     - newsletter
+    - newsletter-sent
 
 fields:
   
   sentDate:
     type: date
-    label: date
-    default: now
     disabled: true
+    label: Sent
+    default: now
+    step: 1
+    time:
+      display: HH:mm
 
   subject:
     type: text
@@ -24,4 +39,8 @@ fields:
   message:
     type: textarea
     size: large
+    disabled: true
+
+  log:
+    type: textarea
     disabled: true

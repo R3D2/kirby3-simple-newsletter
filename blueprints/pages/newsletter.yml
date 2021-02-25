@@ -5,22 +5,25 @@ icon: ✉️
 preset: page
 pages: false
 
+status:
+  draft:
+    label: Draft
+    text: This is a draft.
+  unlisted:
+    label: Scheduled
+    text: The newsletter is scheduled.
+  listed:
+    label: Sent
+    text: The newsletter has been sent.
+
 options:
   changeTemplate:
-    - newsletter
     - newsletter-sent
+    - newsletter
 
 fields:
-  # isSent:
-  #   type: toggle
-  #   default: false
-  #   when:
-  #     alwaysHidden: true
-
   newsletter:
     type: newsletter
-    # when:
-    #   isSent: false
 
   to:
     label: scardoso.newsletter.t.testRecipients
@@ -34,3 +37,7 @@ fields:
   message:
     type: textarea
     size: large
+  
+  log:
+    type: textarea
+    disabled: true

@@ -5,5 +5,5 @@ sections:
   pages: true
     create: subscriber
     status: all
-    icon: false
+    image: false
     text: '{{ page.email }}'
