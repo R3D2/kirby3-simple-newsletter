@@ -1,0 +1,27 @@
+title: Sent Newsletter
+
+icon: 📤
+
+preset: page
+pages: false
+
+options:
+  changeTemplate:
+    - newsletter
+
+fields:
+  
+  sentDate:
+    type: date
+    label: date
+    default: now
+    disabled: true
+
+  subject:
+    type: text
+    disabled: true
+
+  message:
+    type: textarea
+    size: large
+    disabled: true

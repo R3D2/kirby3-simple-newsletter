@@ -18,14 +18,15 @@ class Newsletter
         return $this->subscribers;
     }
 
-    public function send($from, $to, $subject, $message, $page, $test)
+    public function send($from, $to, $subject, $message, $page, $test): array
     {
-        $to = $test ? $to : $this->subscribers->getEmails(); // Get all the subscribers or set test recipients
-        $files = Newsletter::getFiles($page);
-
         $result = [];
         $log = '';
         $status = 200;
+
+        // Get all the subscribers or set test recipients
+        $to = $test ? $to : $this->subscribers->getEmails(); 
+        $files = Newsletter::getFiles($page);
 
         // Check if we have at least of subscriber or a test recipient
         if (empty($to)) {
@@ -33,6 +34,7 @@ class Newsletter
             throw new Exception($errorMessage);
         };
 
+        // send mails
         try {
             $email = kirby()->email([
                 'from' => $from,
@@ -61,7 +63,11 @@ class Newsletter
             'status' => $status
         ];
 
-        kirby()->trigger('newsletter.send:after', compact('page'));
+        // trigger Send:After Hook
+        if (!$test) {
+            kirby()->trigger('newsletter.send:after', compact('page'));
+        };
+
         return $result;
     }
 

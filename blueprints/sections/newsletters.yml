@@ -1,6 +1,6 @@
 type: pages
-headline: Newsletter
-info: "{{ page.subject }}"
-template: newsletter
+templates:
+  - newsletter
+  - newsletter-sent
 empty: No newsletters yet
 sortBy: date desc

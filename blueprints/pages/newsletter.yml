@@ -1,19 +1,26 @@
-
 title: Newsletter
 
-icon: 🖼
+icon: ✉️
 
 preset: page
 pages: false
 
-status:
-  draft: true
-  review: false
-  listed: true
+options:
+  changeTemplate:
+    - newsletter
+    - newsletter-sent
 
 fields:
+  # isSent:
+  #   type: toggle
+  #   default: false
+  #   when:
+  #     alwaysHidden: true
+
   newsletter:
     type: newsletter
+    # when:
+    #   isSent: false
 
   to:
     label: scardoso.newsletter.t.testRecipients

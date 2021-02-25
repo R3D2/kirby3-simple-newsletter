@@ -3,6 +3,7 @@ icon: 👥
 
 sections:
   pages: true
+    create: subscriber
     status: all
     icon: false
     text: '{{ page.email }}'

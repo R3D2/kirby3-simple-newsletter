@@ -7,18 +7,38 @@ use Kirby\Cms\Model;
 use Kirby\Cms\Pages;
 use Kirby\Cms\Page;
 use Kirby\Exception\Exception;
+use Kirby\Toolkit\Collection;
 use Kirby\Toolkit\Str;
 
-class Subscribers extends Pages {
+class Subscribers extends Collection {
 
     protected $subscribersPage;
 
     public function __construct()
     {
-        $this->subscribersPage = kirby()->page(option('scardoso.newsletter.subscribers'));
+        $kirby = kirby();
+
+        $this->subscribersPage = $kirby->page(option('scardoso.newsletter.subscribers'));
+        $this->data($this->subscribersPage->children()->toArray());
     }
 
-    public function subscribe(array $subscriberData) {
+    public function getPageObject(): Page {
+        return $this->subscribersPage;
+    }
+
+    public function getSubscriber(string $slug): Page 
+    {
+        $subscriber = page($slug);
+
+        if (!$subscriber) {
+            throw new Error('No Entry.');
+        }
+
+        return $subscriber;
+    }
+
+    public function subscribe(array $subscriberData): Page
+    {
         // create virtual subscriber page
         $virtualSubscriber = new Page([
             'slug' => Str::random(16),
@@ -28,10 +48,10 @@ class Subscribers extends Pages {
             'content' => $subscriberData,
         ]);
 
-        // check virtual page for errors
+        // check virtual page for validation errors
         $errors = $virtualSubscriber->errors();
 
-        // handle errors
+        // handle validation errors
         if (sizeOf($errors) > 0) {
             throw new Exception([
                 'key' => 'scardoso.fieldsvalidation',
@@ -45,13 +65,12 @@ class Subscribers extends Pages {
             return $subscriber->email()->toString() == $virtualSubscriber->email()->toString();
         });
 
+        // handle error
         if (sizeOf($exists) > 0) {
             throw new Exception([
                 'key' => 'scardoso.existingEntry',
                 'httpCode' => 400,
-                'details' => [
-                    'message' => 'Email address already registered',
-                ]
+                'details' => $exists,
             ]);
         }
 
@@ -61,19 +80,47 @@ class Subscribers extends Pages {
 
         // create subscriber
         $virtualSubscriber->save();
+
+        // TODO
+        // send a confirmation mail in which the new subscriber has to confirm their subscription
+
+        return $virtualSubscriber;
     }
 
-    public function unsubscribe(array $subscriber): self {
+    public function confirmSubscription(string $slug): Page
+    {
+        $subscriber = getSubscriber($slug);
 
+        return $subscriber;
     }
 
-    public function getEmails() 
+    public function unsubscribe(string $slug): Page 
+    {
+        $subscriber = getSubscriber($slug);
+
+        $subscriber->changeStatus('unlisted');
+
+        return $subscriber;
+    }
+
+    public function delete(string $slug): Page
+    {
+        $subscriber = getSubscriber($slug);
+
+        // TODO
+        // delete subscriber page
+
+        return $subscriber;
+    }
+
+    public function getEmails()
     {
         $emails = [];
 
         // Set the uri of your subscriber page in the config
-        foreach (kirby()->page(option('scardoso.newsletter.subscribers'))->subscriber()->toStructure() as $e) {
-            $to[] = $e->email()->toString();
+        //TODO add only listed; subscribers should have to confirm their subscription
+        foreach ($this->subscribersPage->children() as $subscriber) {
+            $emails[] = $subscriber->email()->toString();
         }
 
         return $emails;

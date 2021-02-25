@@ -8,8 +8,9 @@ use Kirby\Cms\Page;
 use Kirby\Cms\Pages;
 
 load([
-    'scardoso\\newsletter\\newsletter' => 'lib/newsletter.php',
-    'scardoso\\newsletter\\subscribers' => 'lib/subscribers.php',
+    'scardoso\\newsletter\\newsletter' => 'lib/Newsletter.php',
+    'scardoso\\newsletter\\subscribers' => 'lib/Subscribers.php',
+    'scardoso\\newsletter\\Models\\SubscriberPage' => 'models/subscriber.php',
 ], __DIR__);
 
 function newsletter(): Newsletter
@@ -25,16 +26,21 @@ Kirby::plugin('scardoso/newsletter', [
     'blueprints' => [
         'pages/newsletters' => __DIR__ . '/blueprints/pages/newsletters.yml',
         'pages/newsletter' => __DIR__ . '/blueprints/pages/newsletter.yml',
+        'pages/newsletter-sent' => __DIR__ . '/blueprints/pages/newsletter-sent.yml',
         'pages/subscribers' => __DIR__ . '/blueprints/pages/subscribers.yml',
         'pages/subscriber' => __DIR__ . '/blueprints/pages/subscriber.yml',
 
         'sections/newsletters' => __DIR__ . '/blueprints/sections/newsletters.yml'
     ],
     'snippets' => [
-        'newsletter_form' => __DIR__ . '/snippets/newsletter_form.php'
+        'subscribe_form' => __DIR__ . '/snippets/subscribe_form.php'
+    ],
+    'templates' => [
+        'newsletter' => __DIR__ . '/templates/newsletter.php',
+        'newsletter-sent' => __DIR__ . '/templates/newsletter-sent.php'
     ],
     'pageModels' => [
-        'order' => 'OrderPage'
+        'subscriber' => 'Scardoso\\Newsletter\\Models\\SubscriberPage'
     ],
     'fields' => [
         'newsletter' => [
@@ -56,57 +62,90 @@ Kirby::plugin('scardoso/newsletter', [
     ],
     'hooks' => [
         'newsletter.send:after' => function ($page) {
+            kirby()->impersonate('kirby');
+            $page->changeTemplate('newsletter-sent');
             $page->changeStatus('listed');
         },
+        'page.duplicate:after' => function ($duplicatePage, $originalPage) {
+            if ($duplicatePage->intendedTemplate() == 'newsletter-sent') {
+                $duplicatePage->changeTemplate('newsletter');
+            }
+        }
+    ],
+    'routes' => [
+        [
+            'pattern' => '/newsletter/subscribers/add',
+            'method' => 'POST',
+            'action'  => function () {
+
+                $data = $_POST;
+                $redirect = isset($_POST['redirect']) ? $_POST['redirect'] : 'home';
+                $newsletter = newsletter();
+
+                $kirby = kirby();
+                $kirby->impersonate('kirby');
+
+                try {
+                    $newsletter->subscribers()->subscribe($data);
+                    $return = $data;
+                } 
+                catch(Exception $e) {
+                    $return = $e;
+                }
+
+                return $return;
+            },
+        ],
+        [
+            'pattern' => 'newsletter/subscribers/unsubscribe/(:any)',
+            'action' => function($slug) {
+                $subscriber = page($slug);
+
+                if (!$subscriber) {
+                    throw new Error('Not a valid user');
+                }
+
+                $subscribers = newsletter()->subscribers();
+                $kirby = kirby();
+                $kirby->impersonate('kirby');
+
+                $subscribers->unsubscribe($subscriber);
+
+            }
+        ],
     ],
     'api' => [
         'routes' => [
             [
                 'pattern' => 'newsletter/send/(:any)/(:any)/(:num)',
+                'method' => 'get',
                 'action'  => function (string $uri_1, string $uri_2, int $test) {
                     $test = $test === 0;
                     $from = kirby()->option('scardoso.newsletter.from');
-                    $nl = new Newsletter();
+                    $nl = newsletter();
 
-                    if ($from !== '') {
-                        $page = kirby()->page($uri_1 .'/'. $uri_2);
-                        $to = ($test) ? $page->to()->trim()->split(',') : 'multi';
-                        if ($to != '') {
-                            $subject = $page->subject()->toString();
-                            $message = $page->message()->kirbytext()->toString();
-                            $result = $nl->send($from, $to, $subject, $message, $page, $test);
-                        } else {
-                            $result = [
-                                'message' => t('scardoso.newsletter.noTestMail'),
-                                'status' => 400
-                            ];
-                        }
+                    if ($from == '') {
+                        throw new Error([
+                            'message' => "Please set 'from' property in your config.php",
+                            'status' => 400
+                        ]);
+                    }
+
+                    $page = kirby()->page($uri_1 .'/'. $uri_2);
+                    $to = ($test) ? $page->to()->trim()->split(',') : 'multi';
+                    if ($to != '') {
+                        $subject = $page->subject()->toString();
+                        $message = $page->message()->kirbytext()->toString();
+                        $result = $nl->send($from, $to, $subject, $message, $page, $test);
                     } else {
                         $result = [
-                            'message' => "Please set 'from' property in your config.php",
+                            'message' => t('scardoso.newsletter.noTestMail'),
                             'status' => 400
                         ];
                     }
 
                     return json_encode($result);
                 },
-                'method' => 'get'
-            ],
-            [
-                'pattern' => 'newsletter/subscriber/add',
-                'action'  => function () {
-                    $kirby = kirby();
-                    $kirby->impersonate('kirby');
-
-                    $kirby->page('subscriber')->createChild([
-                        'content'  => [
-                            'subscriber' => [
-                                'email' => $_POST['email']
-                            ]
-                        ]
-                    ]);
-                },
-                'method' => 'post'
             ],
         ]   
     ],
