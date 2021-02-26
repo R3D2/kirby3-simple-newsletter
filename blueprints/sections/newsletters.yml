@@ -3,5 +3,6 @@ image: false
 templates:
   - newsletter
   - newsletter-sent
+  - default
 empty: No newsletters yet
 sortBy: date desc

@@ -37,7 +37,7 @@
 
 ?>
 
-<form action="newsletter/subscribers/add" method="POST">
+<form action="<?= url('/newsletter/subscribers/add'); ?>" method="POST">
     <?php foreach ($fields as $field): ?>
     <input type="<?= $field['type']; ?>" name="<?= $field['name']; ?>" required>
     <?php endforeach; ?>

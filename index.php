@@ -72,8 +72,8 @@ Kirby::plugin('scardoso/newsletter', [
     'hooks' => [
         'newsletter.send:after' => function ($page) {
             kirby()->impersonate('kirby');
-            $page->changeTemplate('newsletter-sent');
-            $page->changeStatus('listed');
+            $page = $page->changeStatus('listed');
+            $page = $page->changeTemplate('newsletter-sent');
         },
         'page.duplicate:after' => function ($duplicatePage, $originalPage) {
             if ($duplicatePage->intendedTemplate() == 'newsletter-sent') {

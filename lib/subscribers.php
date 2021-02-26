@@ -69,17 +69,17 @@ class Subscribers extends Collection {
             ]);
         }
 
-        // generate security hash
-        $virtualSubscriber = $virtualSubscriber->update([
-            'hash' => bin2hex(random_bytes(16)),
-        ]);
-
         // authenticate
         $kirby = kirby();
         $kirby->impersonate('kirby');
 
         // create subscriber
         $subscriber = $virtualSubscriber->save();
+
+        // generate security hash
+        $subscriber = $subscriber->update([
+            'hash' => bin2hex(random_bytes(16)),
+        ]);
 
         // send a confirmation mail in which the new subscriber has to confirm their subscription
         if (option('scardoso.newsletter.confirm')) {

@@ -92,15 +92,15 @@ class Newsletter
             }
         }
 
-        // trigger Send:After Hook
-        if (!$test) {
-            kirby()->trigger('newsletter.send:after', ['page' => $newsletter]);
-        };
-
         // write errors to log
         $newsletter->update([
             'log' => $log,
         ]);
+
+        // trigger Send:After Hook
+        if (!$test) {
+            kirby()->trigger('newsletter.send:after', ['page' => $newsletter]);
+        };
 
         return $newsletter;
     }

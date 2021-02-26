@@ -46,4 +46,3 @@ addFields:
       - 'Yes'
     help: | 
       Set the subscriber status to "Active". **Make sure that this person has explicitly given you permission to email them.**
-  template: false
