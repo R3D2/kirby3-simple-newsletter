@@ -7,3 +7,4 @@ sections:
     status: all
     image: false
     text: '{{ page.email }}'
+    empty: Nobody here yet. Add your first subscriber!

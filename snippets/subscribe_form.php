@@ -10,12 +10,15 @@
         if ($newsletter->subscribers()->count() == 0) {
     
             $virtualSubscriber = new Page([
-                'slug' => Str::random(16),
+                'slug' => 'virtual',
                 'template' => 'subscriber',
                 'model' => 'subscriber',
                 'parent' => $subscriberPage,
             ]);
-    
+
+            // this is not working:
+            // $fields = $virtualSubscriber->getRequiredFields();
+            // so we replicate the outcome of that method:
             $fields = $virtualSubscriber->blueprint()->fields();
             $fields = array_filter($fields, function ($var) {
                 if (array_key_exists('required', $var)) {

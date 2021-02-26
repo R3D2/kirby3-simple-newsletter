@@ -45,4 +45,5 @@ addFields:
       - 'No'
       - 'Yes'
     help: | 
-      Set the status of the subscriber to 'active'. Make sure that this person has explicitly given you permission to email them.
+      Set the subscriber status to "Active". **Make sure that this person has explicitly given you permission to email them.**
+  template: false
