@@ -2,26 +2,11 @@ title: Sent Newsletter
 
 icon: 📤
 
-preset: page
-pages: false
-
-status:
-  draft:
-    label: Draft
-    text: This is a draft.
-  unlisted:
-    label: Scheduled
-    text: The newsletter is scheduled.
-  listed:
-    label: Sent
-    text: The newsletter has been sent.
-
-options:
-  changeTemplate:
-    - newsletter
-    - newsletter-sent
+extends: layouts/newsletter
 
 fields:
+
+  newsletter: false
   
   sentDate:
     type: date
@@ -31,16 +16,14 @@ fields:
     step: 1
     time:
       display: HH:mm
+  
+  to: false
 
   subject:
-    type: text
     disabled: true
 
-  message:
-    type: textarea
-    size: large
+  message: 
     disabled: true
 
   log:
-    type: textarea
     disabled: true
