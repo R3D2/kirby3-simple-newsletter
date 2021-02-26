@@ -86,7 +86,7 @@ export default {
             console.log(dialog);
             let isTest = (test) ? '/0' : '/1';
             let url = 'newsletter/send/' + encodeURI(this.pageURI) + isTest;
-            this.$api.post(url)
+            this.$api.get(url)
             .then(response => {
                 dialog.close();
                 this.$refs.dialog_success.open();
