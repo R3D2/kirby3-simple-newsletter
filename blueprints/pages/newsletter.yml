@@ -2,4 +2,9 @@ title: Newsletter
 
 icon: ✉️
 
+options:
+  changeTemplate:
+    - newsletter-sent
+    - newsletter
+
 extends: layouts/newsletter

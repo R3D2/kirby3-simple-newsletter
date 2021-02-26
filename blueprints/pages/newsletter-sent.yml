@@ -4,6 +4,11 @@ icon: 📤
 
 extends: layouts/newsletter
 
+options:
+  changeTemplate:
+    - newsletter-sent
+    - newsletter
+
 fields:
 
   newsletter: false
