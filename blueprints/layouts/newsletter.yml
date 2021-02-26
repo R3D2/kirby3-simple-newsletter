@@ -1,0 +1,39 @@
+preset: page
+pages: false
+
+status:
+  draft:
+    label: Draft
+    text: This is a draft.
+  unlisted:
+    label: Scheduled
+    text: The newsletter is scheduled.
+  listed:
+    label: Sent
+    text: The newsletter has been sent.
+
+options:
+  changeTemplate:
+    - newsletter-sent
+    - newsletter
+
+fields:
+  newsletter:
+    type: newsletter
+
+  to:
+    label: scardoso.newsletter.t.testRecipients
+    help: scardoso.newsletter.t.testRecipientsHelpText
+    type: text
+    icon: email
+
+  subject:
+    type: text
+
+  message:
+    type: textarea
+    size: large
+  
+  log:
+    type: textarea
+    disabled: true

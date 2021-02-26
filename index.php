@@ -32,7 +32,8 @@ Kirby::plugin('scardoso/newsletter', [
         'pages/subscribers' => __DIR__ . '/blueprints/pages/subscribers.yml',
         'pages/subscriber' => __DIR__ . '/blueprints/pages/subscriber.yml',
 
-        'sections/newsletters' => __DIR__ . '/blueprints/sections/newsletters.yml'
+        'sections/newsletters' => __DIR__ . '/blueprints/sections/newsletters.yml',
+        'layouts/newsletter' => __DIR__ . '/blueprints/layouts/newsletter.yml'
     ],
     'snippets' => [
         'subscribe_form' => __DIR__ . '/snippets/subscribe_form.php'
@@ -60,6 +61,9 @@ Kirby::plugin('scardoso/newsletter', [
                     return kirby()->option('scardoso.newsletter.subscribers');
                 }
             ]
+        ],
+        'newsletterbody' => [
+            
         ],
     ],
     'hooks' => [
