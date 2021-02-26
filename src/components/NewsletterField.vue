@@ -79,11 +79,11 @@ export default {
         id: String,
         status: Boolean,
         subscriberLink: String,
+        slug: String,
     },
     methods: {
         send(test) {
             let dialog = (test) ? this.$refs.dialog_test : this.$refs.dialog_send;
-            console.log(dialog);
             let isTest = (test) ? '/0' : '/1';
             let url = 'newsletter/send/' + encodeURI(this.pageURI) + isTest;
             this.$api.get(url)

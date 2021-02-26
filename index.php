@@ -54,6 +54,9 @@ Kirby::plugin('scardoso/newsletter', [
                 'pageURI' => function () {
                     return $this->model()->uri();
                 },
+                'slug' => function() {
+                    return $this->model()->slug();
+                },
                 'id' => function () {
                     return $this->model()->id();
                 },
@@ -148,6 +151,20 @@ Kirby::plugin('scardoso/newsletter', [
     'api' => [
         'routes' => [
             [
+                'pattern' => 'newsletter/newSend/(:any)/(:num)',
+                'method' => 'get',
+                'action' => function(string $slug, int $test) {
+                    // TODO why is this not working ajhslalsjd
+                    $nl = newsletter();
+                    $page = kirby()->page('newsletters/' . $slug);
+                    if (!$page) {
+                        throw new Error('page not found');
+                    }
+                    $result = $nl->newSend(page('newsletters/' . $slug), boolval($test));
+                    return json_encode($result);
+                }
+            ],
+            [
                 'pattern' => 'newsletter/send/(:any)/(:any)/(:num)',
                 'method' => 'get',
                 'action'  => function (string $uri_1, string $uri_2, int $test) {
@@ -162,20 +179,23 @@ Kirby::plugin('scardoso/newsletter', [
                         ]);
                     }
 
-                    $page = kirby()->page($uri_1 .'/'. $uri_2);
-                    $to = ($test) ? $page->to()->trim()->split(',') : 'multi';
-                    if ($to != '') {
-                        $subject = $page->subject()->toString();
-                        $message = $page->message()->kirbytext()->toString();
-                        $result = $nl->send($from, $to, $subject, $message, $page, $test);
-                    } else {
-                        $result = [
-                            'message' => t('scardoso.newsletter.noTestMail'),
-                            'status' => 400
-                        ];
-                    }
+                    $newsletter = kirby()->page($uri_1 .'/'. $uri_2);
 
-                    return json_encode($result);
+                    return $nl->newSend($newsletter, $test);
+
+                    // $to = ($test) ? $page->to()->trim()->split(',') : 'multi';
+                    // if ($to != '') {
+                    //     $subject = $page->subject()->toString();
+                    //     $message = $page->message()->kirbytext()->toString();
+                    //     $result = $nl->send($from, $to, $subject, $message, $page, $test);
+                    // } else {
+                    //     $result = [
+                    //         'message' => t('scardoso.newsletter.noTestMail'),
+                    //         'status' => 400
+                    //     ];
+                    // }
+
+                    // return json_encode($result);
                 },
             ],
         ]   

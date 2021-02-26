@@ -36,12 +36,18 @@ class Newsletter
         // get recipients
         if ($test) {
             $recipients = $newsletter->to()->trim()->split(',');
+            if (count($recipients) == 0) {
+                throw new Exception('No test mail address provided.');
+            }
         } else {
             $recipients = $this
             ->subscribers()
             ->getPageObject()
             ->children()
             ->listed();
+            if ($recipients->count() == 0) {
+                throw new Exception('There is no subscriber to send our newsletter to.');
+            }
         }
 
         // get attachments
