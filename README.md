@@ -1,4 +1,4 @@
-# Kirby 3 Simple Newsletter
+# Kirby 3 Simple Newsletter 💌
 
 a Toolkit for creating and sending minimal, GDPR-compliant newsletters via the Kirby panel. 
 
