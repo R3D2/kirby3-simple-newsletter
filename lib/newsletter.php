@@ -27,6 +27,18 @@ class Newsletter
             throw new Exception('define FROM address in config');
         }
 
+        // check required fields
+        $errors = $newsletter->errors();
+
+        // handle required fields
+        if (sizeOf($errors) > 0) {
+            throw new Exception([
+                'key' => 'scardoso.fieldsvalidation',
+                'httpCode' => 400,
+                'details' => $errors,
+            ]);
+        }
+
         // set "from"
         $from = option('scardoso.newsletter.from');
 

@@ -145,6 +145,8 @@ Kirby::plugin('scardoso/newsletter', [
 
                 $subscribers->unsubscribe($subscriber);
 
+                return 'you have been unsubscribed.';
+
             }
         ],
     ],
@@ -206,9 +208,10 @@ Kirby::plugin('scardoso/newsletter', [
             'scardoso.newsletter.t.testRecipientsHelpText' => 'It is possible to add multiple test mail recipients by separating email addresses with a comma.',
             'scardoso.newsletter.t.confirmSendNewsletter' => 'Are you sure you want to send the newsletter?',
             'scardoso.newsletter.t.confirmSendTestNewsletter' => 'Are you sure you want to send the test newsletter?',
-            'scardoso.newsletter.sendNewsletter' => 'Send newsletter',
+            'scardoso.newsletter.sendNewsletter' => 'Send now',
             'scardoso.newsletter.viewSubscribers' => 'View subscribers',
             'scardoso.newsletter.sendTestMail' => 'Send a test mail',
+            'scardoso.newsletter.scheduleMail' => 'Schedule send',
             'scardoso.newsletter.noTestMail' => 'Please enter a valid email address for sending the test newsletter',
 
             'error.scardoso.fieldsvalidation' => 'Invalid field content.',

@@ -10,12 +10,8 @@ options:
 
 status:
   draft:
-    label: Unsubscribed
-    text: | 
-      The subscriber has been unsubscribed.
-      // TODO
-      Warning: changing the status to unsubscribed
-      removes all information associated with this email address. 
+    label: Error
+    text: // TODO an error has been detected with this subscriber.
   unlisted:
     label: Awaiting permission
     text: The subscriber has been added, but has not confirmed their subscription.

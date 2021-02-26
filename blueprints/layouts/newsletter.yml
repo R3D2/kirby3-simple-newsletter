@@ -1,17 +1,6 @@
 preset: page
 pages: false
 
-status:
-  draft:
-    label: Draft
-    text: This is a draft.
-  unlisted:
-    label: Scheduled
-    text: The newsletter is scheduled.
-  listed:
-    label: Sent
-    text: The newsletter has been sent.
-
 options:
   changeTemplate:
     - newsletter-sent
@@ -29,10 +18,12 @@ fields:
 
   subject:
     type: text
+    required: true
 
   message:
     type: textarea
     size: large
+    required: true
   
   log:
     type: textarea

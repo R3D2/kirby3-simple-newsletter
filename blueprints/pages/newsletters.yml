@@ -13,7 +13,7 @@ columns:
 
       unlisted:
         extends: sections/newsletters
-        headline: In Review
+        headline: Scheduled
         status: unlisted
 
   - width: 1/2
@@ -22,5 +22,5 @@ columns:
         extends: sections/newsletters
         headline: Archive
         status: listed
-        info: '{{ page.sentDate.toDate('Y-m-d') }}'
-        sortBy: date desc
+        info: '{{ page.sentDate.toDate('Y-m-d H:i') }}'
+        sortBy: sentDate desc

@@ -2,6 +2,17 @@ title: Sent Newsletter
 
 icon: 📤
 
+status:
+  draft:
+    label: Draft
+    text: This is a draft.
+  unlisted:
+    label: Scheduled
+    text: The newsletter is scheduled.
+  listed:
+    label: Sent
+    text: The newsletter has been sent.
+
 extends: layouts/newsletter
 
 options:

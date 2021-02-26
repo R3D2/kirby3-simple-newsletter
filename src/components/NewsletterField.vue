@@ -31,6 +31,14 @@
                 {{ $t('scardoso.newsletter.viewSubscribers') }}
                 </k-button>
                 <k-button 
+                    icon="clock"
+                    theme="button"
+                    class="k-send-button"
+                    type="submit"
+                >
+                {{ $t('scardoso.newsletter.scheduleMail') }}
+                </k-button>
+                <k-button 
                     icon="check"
                     class="k-send-button"
                     type="submit"

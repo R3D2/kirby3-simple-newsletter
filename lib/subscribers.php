@@ -110,25 +110,11 @@ class Subscribers extends Collection {
         return $subscriber;
     }
 
-    public function unsubscribe(Page $subscriber): Page 
+    public function unsubscribe(Page $subscriber) 
     {
         $kirby = kirby();
         $kirby->impersonate('kirby');
-        $subscriber->changeStatus('draft');
-
-        return $subscriber;
-
-        // TODO: actually delete the user!
-    }
-
-    public function delete(string $slug): Page
-    {
-        $subscriber = getSubscriber($slug);
-
-        // TODO
-        // delete subscriber page
-
-        return $subscriber;
+        $subscriber->delete();
     }
 
     public function getEmails()
@@ -136,8 +122,7 @@ class Subscribers extends Collection {
         $emails = [];
 
         // Set the uri of your subscriber page in the config
-        //TODO add only listed; subscribers should have to confirm their subscription
-        foreach ($this->subscribersPage->children() as $subscriber) {
+        foreach ($this->subscribersPage->children()->listed() as $subscriber) {
             $emails[] = $subscriber->email()->toString();
         }
 
