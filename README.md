@@ -82,19 +82,3 @@ There's an example snippet for how to implement a subscription form located at `
 ## Disclaimer
 
 This plugin is provided "as is" with no guarantee. Use it at your own risk and always test it yourself before using it in a production environment. If you find any issues, please [create a new issue](https://github.com/username/plugin-name/issues/new).
-
-## License Disclaimer
-
-I'm not sure about the MIT license. The plugin should be free to use & free to use&modify&copy by anybody who wants to do that without any harmful intent. Still I think i'm looking for something a little more restrictive – maybe some upcoming features that would largely only benefit commercial use (such as extended tracking) should be paid? (also idk but i'm always a bit bothered by the wording of the usual notice: it is *"discouraged"* to use this plugin for hate speech & human rights violations? imo it should be absolutely prohibited 🤷‍♂️ )
-
-\- moevbiz
-
-But so, as it stands:
-
-## License (with a question mark):
-
-MIT
-
-It is discouraged* to use this plugin in any project that promotes racism, sexism, antisemitism, homophobia, animal abuse, violence or any other form of hate speech.
-
-\*read: forbidden
