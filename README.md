@@ -1,6 +1,7 @@
 # Kirby 3 Simple Newsletter 💌
 
 a Toolkit for creating and sending minimal, GDPR-compliant newsletters via the Kirby panel. 
+⚠ Unfinished and untested! – I started work on this in order to use for a client project based on the groundwork by https://github.com/R3D2/kirby3-newsletter. Unfortunately, the project was unexpectedly cancelled and I'm still waiting for the right moment to continue work on this ~ b
 
 ## Features
 - send minimal HTML newsletters using markdown and KirbyText
@@ -57,7 +58,7 @@ There's an example snippet for how to implement a subscription form located at `
 - [ ] schedule sending of newsletters
 
 ## TODO
-- [ ] disable changing newsletter templates and statuses via panel, as this is handled programatically (panel view extended plugin?)
+- [ ] disable changing newsletter templates and status via panel, as this is handled programatically (panel view extended plugin?)
 - [ ] allow setting custom blueprints/templates/locations/names for “newsletters” and “subscribers” pages in options
 - [ ] prevent clicking the “send” button twice
 - [ ] implement styling of the newsletter (option to define a stylesheet location?)
