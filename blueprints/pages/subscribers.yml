@@ -1,18 +1,10 @@
-title : Subscribers
+title: Subscribers
+icon: 👥
 
-preset: page
-
-pages: false
-files: false
-
-options:
-  update: true
-
-fields:
-  subscriber:
-    label: Abonnés
-    type: structure
-    fields:
-      email:
-        label: Email
-        type: text
+sections:
+  pages: true
+    create: subscriber
+    status: all
+    image: false
+    text: '{{ page.email }}'
+    empty: Nobody here yet. Add your first subscriber!

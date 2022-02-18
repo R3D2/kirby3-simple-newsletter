@@ -1,7 +1,15 @@
 {
+    "name": "scardoso/newsletter",
+    "description": "Kirby 3 Newsletter Plugin",
+    "type": "kirby-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "bruno",
+            "email": "moev.biz@moev.biz"
+        }
+    ],
     "require": {
-        "mailgun/mailgun-php": "^3.0",
-        "php-http/guzzle6-adapter": "^2.0",
-        "php-http/message": "^1.8"
+        "steirico/kirby-plugin-custom-add-fields": "^1.4"
     }
 }

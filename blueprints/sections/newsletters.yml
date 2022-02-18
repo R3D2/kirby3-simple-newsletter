@@ -1,7 +1,8 @@
 type: pages
-headline: Newsletter
-parent: kirby.page("newsletter")
-info: "{{ page.date.toDate('d.m.Y') }}"
-template: newsletter
+image: false
+templates:
+  - newsletter
+  - newsletter-sent
+  - default
 empty: No newsletters yet
 sortBy: date desc

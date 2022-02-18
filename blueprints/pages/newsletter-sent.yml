@@ -1,0 +1,45 @@
+title: Sent Newsletter
+
+icon: 📤
+
+status:
+  draft:
+    label: Draft
+    text: This is a draft.
+  unlisted:
+    label: Scheduled
+    text: The newsletter is scheduled.
+  listed:
+    label: Sent
+    text: The newsletter has been sent.
+
+extends: layouts/newsletter
+
+options:
+  changeTemplate:
+    - newsletter-sent
+    - newsletter
+
+fields:
+
+  newsletter: false
+  
+  sentDate:
+    type: date
+    disabled: true
+    label: Sent
+    default: now
+    step: 1
+    time:
+      display: HH:mm
+  
+  to: false
+
+  subject:
+    disabled: true
+
+  message: 
+    disabled: true
+
+  log:
+    disabled: true

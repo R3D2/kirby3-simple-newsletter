@@ -1,7 +1,9 @@
 import NewsletterField from "./components/NewsletterField";
+import NewsletterBodyField from "./components/NewsletterBodyField";
 
 panel.plugin('scardoso/simple-newsletter', {
     fields: {
-        newsletter: NewsletterField
+        newsletter: NewsletterField,
+        newsletterBody: NewsletterBodyField
     }
 });

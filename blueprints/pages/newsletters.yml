@@ -1,13 +1,6 @@
 title: Newsletters
 
-icon: 📖
-
-preset: pages
-
-templates:
-  - newsletter
-
-create: newsletter
+icon: 🏤
 
 columns:
   - width: 1/2
@@ -16,15 +9,18 @@ columns:
         extends: sections/newsletters
         headline: Drafts
         status: draft
+        create: newsletter
 
       unlisted:
         extends: sections/newsletters
-        headline: In Review
+        headline: Scheduled
         status: unlisted
 
   - width: 1/2
     sections:
       listed:
         extends: sections/newsletters
-        headline: Published
+        headline: Archive
         status: listed
+        info: '{{ page.sentDate.toDate('Y-m-d H:i') }}'
+        sortBy: sentDate desc

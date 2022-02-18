@@ -1,27 +1,21 @@
-
 title: Newsletter
 
-icon: 🖼
-
-preset: page
-pages: false
+icon: ✉️
 
 status:
-  draft: true
-  review: false
-  listed: true
+  draft:
+    label: Draft
+    text: This is a draft.
+  unlisted:
+    label: Scheduled
+    text: The newsletter is scheduled.
+  listed:
+    label: Sent
+    text: The newsletter has been sent.
 
-fields:
-  newsletter:
-    type: newsletter
+options:
+  changeTemplate:
+    - newsletter-sent
+    - newsletter
 
-  to:
-    label: Adresse de Réception de la newsletter de test
-    type: email
-
-  subject:
-    type: text
-
-  message:
-    type: textarea
-    size: large
+extends: layouts/newsletter

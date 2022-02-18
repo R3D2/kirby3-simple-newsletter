@@ -1,0 +1,30 @@
+preset: page
+pages: false
+
+options:
+  changeTemplate:
+    - newsletter-sent
+    - newsletter
+
+fields:
+  newsletter:
+    type: newsletter
+
+  to:
+    label: scardoso.newsletter.t.testRecipients
+    help: scardoso.newsletter.t.testRecipientsHelpText
+    type: text
+    icon: email
+
+  subject:
+    type: text
+    required: true
+
+  message:
+    type: textarea
+    size: large
+    required: true
+  
+  log:
+    type: textarea
+    disabled: true

@@ -1,77 +1,85 @@
-# Kirby 3 Simple Newsletter
+# Kirby 3 Simple Newsletter 💌
 
-![Version](https://img.shields.io/badge/version-0.2-green.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Kirby Version](https://img.shields.io/badge/Kirby-3.0%2B-red.svg)
+a Toolkit for creating and sending minimal, GDPR-compliant newsletters via the Kirby panel. 
+⚠ Unfinished and untested! – I started work on this in order to use for a client project based on the groundwork by https://github.com/R3D2/kirby3-newsletter. Unfortunately, the project was unexpectedly cancelled and I'm still waiting for the right moment to continue work on this ~ b
+
+## Features
+- send minimal HTML newsletters using markdown and KirbyText
+- basic subscription management
+- subscribe form generator (alpha; todo)
+- schedule newsletters (planned)
+- send mails via API (early stage)
+- basic routes for subscribe / unsubscribe
+
+## Install
+
+1. `git clone` or unzip into your plugins directory. 
+2. `composer install`.
+
+### Plugin Dependencies
+- Custom add fields plugin (https://github.com/steirico/kirby-plugin-custom-add-fields)
+
+This is a plugin for Kirby CMS (https://getkirby.com/). 
+Kirby is *not free software*.
 
 ## Setup
 
-### Blueprints
-There is two custom blueprints that needs to be added to your panel so you can create the pages 
-to send a newsletter and to get visitors to subscribe at your newsletter.
+### Content
+Requires a `Subscribers` and a `Newsletters` page with the respective slug / template. (I think I have implemented the option to change the template names but you can never be too sure…)
 
-You can find them in the blueprints folder...
+### Options
 
-## Options
+Transport configuration needs to be set in the main config file (for now) => https://getkirby.com/docs/guide/emails#transport-configuration. 
 
-The following options need to be set in your `/site/config/config.php` file:
-
-```
-'email' => [
-        'transport' => [
-          'type' => 'smtp',
-          'host' => 'mail.example.com',
-          'port' => 587,
-          'security' => true,
-          'auth' => true,
-          'username' => 'email@example.com',
-          'password' => 'mailpassword',
-        ]
-    ],
-    'scardoso.newsletter.from' => 'myfrom@email.com',
-```
-
-### Subscribers
-To allow visitor to subscribe to your newsletter you need to send a POST request to this route :
-
-- First create a page with the subscriber blueprint
-- Create a form who sends the email through a POST request
-- Then use the uri you have set for the blueprint you have created to the page function.
+Other options:
 
 ```php
-<?php
-if( !empty($_POST) && isset($_POST['email']) ) {
-    // Get the current list of subscribers
-    // parameter of the page function must be the uri of your subscriber page
-    $subs = kirby()->page('abonnes')->subscriber()->toStructure()->toArray();
-    
-    // Add the new one
-    $subs[] = [
-        'email' => $_POST['email']
-    ];
-    
-    // Add it to our struct
-    $kirby = kirby();
-    $kirby->impersonate('kirby');
+// set "From" Email address. Required
+'scardoso.newsletter.from' => 'bruno@email.com',
+// set slug of subscribers page. Default: 'subscribers'
+'scardoso.newsletter.subscribers' => 'subscribers',
 
-    $kirby->page('abonnes')->save([
-        'subscriber' => $subs
-    ]);
-}
-?>
 ```
 
+### Routes
+
+there's a route each to subscribe / confirm / unsubscribe a user, find their definitions in the `index.php` file.
+
+There's an example snippet for how to implement a subscription form located at `snippets/subscribe_form.php`. Integration with the uniform plugin is planned.
+
+## Planned
+- [ ] more logical class names (“List”, “Campaign”, “Mail/Mails”,…)
+- [ ] Uniform plugin integration for dynamic subscription forms
+- [ ] release via composer
+- [ ] import subscribers (as json)
+- [ ] multiple subscriber lists/Sections – choose which list to send newsletter to. 
+- [ ] use different possible Collections as subscriber list (subscribers/recipients should extend collection; possibility to send letter to all panel users)
+- [ ] simple mailgun integration
+- [ ] schedule sending of newsletters
+
 ## TODO
-- Add url in the footer of the newsletter to unsubscribe
-- Add the possibility to customize routes in the config.php
-- Modify the feature to add subscribers in the plugin for easier integration
-- Enhance the way the plugin deals with error in the panel
-- Add Translations
+- [ ] disable changing newsletter templates and status via panel, as this is handled programatically (panel view extended plugin?)
+- [ ] allow setting custom blueprints/templates/locations/names for “newsletters” and “subscribers” pages in options
+- [ ] prevent clicking the “send” button twice
+- [ ] implement styling of the newsletter (option to define a stylesheet location?)
+- [ ] apply required fields in panel “add” dialog (custom dialog component instead of plugin?)
+- [ ] use uniform form to generate subscription form
+- [ ] generate plaintext version of newsletter
+- [ ] use plugin specific mail configuration, not the global one
+- [ ] more panel translations
+- [ ] improve handling of exceptions / success messages / redirects
+- [ ] set status of subscriber to “draft” if error detected?
+
+## ideas
+- [ ] a new name for the plugin to avoid confusion (is “Newsletter” the name of the plugin or the class name of “a single newsletter”?
+- [ ] integrate pagetable plugin for subscriber lists
+- [ ] merge newsletter field into a “newsletter-tools” section so that it can be imported on any page
+- [ ] export subscribers as json
+- [ ] allow different sources as subscriber pages (i.e all registered users, or an external tool)
+- [ ] allow for setting different templates (plaintext, html)
+- [ ] integration with matomo plugin for tracking? (:/ not sure)
+
 
 ## Disclaimer
 
 This plugin is provided "as is" with no guarantee. Use it at your own risk and always test it yourself before using it in a production environment. If you find any issues, please [create a new issue](https://github.com/username/plugin-name/issues/new).
-
-## License
-
-[MIT](https://opensource.org/licenses/MIT)
-
-It is discouraged to use this plugin in any project that promotes racism, sexism, homophobia, animal abuse, violence or any other form of hate speech.

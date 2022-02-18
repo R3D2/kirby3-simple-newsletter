@@ -1,0 +1,48 @@
+title: Subscriber
+
+preset: page
+
+pages: false
+files: false
+
+options:
+  update: true
+
+status:
+  draft:
+    label: Error
+    text: // TODO an error has been detected with this subscriber.
+  unlisted:
+    label: Awaiting permission
+    text: The subscriber has been added, but has not confirmed their subscription.
+  listed:
+    label: Active
+    text: The subscriber has confirmed their subscription.
+
+fields:
+  email:
+    type: email
+    required: true
+  name:
+    type: text
+  addedBy:
+    type: text
+    disabled: true
+    label: Added by
+  hash:
+    type: hidden
+
+# custom add fields definition
+addFields:
+
+  email:
+    type: email
+    required: true
+  subscribe:
+    type: toggle
+    label: Active
+    text:
+      - 'No'
+      - 'Yes'
+    help: | 
+      Set the subscriber status to "Active". **Make sure that this person has explicitly given you permission to email them.**
