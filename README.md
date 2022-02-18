@@ -1,7 +1,8 @@
 # Kirby 3 Simple Newsletter 💌
 
-a Toolkit for creating and sending minimal, GDPR-compliant newsletters via the Kirby panel. 
-⚠ Unfinished and Untested - WIP
+A Toolkit for creating and sending minimal, GDPR-compliant newsletters via the Kirby panel.
+
+⚠ Unfinished and Untested - WIP ⚠
 
 ## Features
 - send minimal HTML newsletters using markdown and KirbyText
