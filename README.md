@@ -1,7 +1,7 @@
 # Kirby 3 Simple Newsletter 💌
 
 a Toolkit for creating and sending minimal, GDPR-compliant newsletters via the Kirby panel. 
-⚠ Unfinished and untested! – I started work on this in order to use for a client project based on the groundwork by https://github.com/R3D2/kirby3-newsletter. Unfortunately, the project was unexpectedly cancelled and I'm still waiting for the right moment to continue work on this ~ b
+⚠ Unfinished and Untested - WIP
 
 ## Features
 - send minimal HTML newsletters using markdown and KirbyText
